@@ -42,21 +42,7 @@ Client -> Controller -> Service -> Repository -> Database
 
 ## Current Workflow
 
-COM Create Order
-↓
-SOM Create Work Order
-↓
-Status = SUBMITTED
-↓
-Workflow Engine generate Activities
-↓
-Activity 1 = RDY
-Activity 2 = NRD
-Activity 3 = NRD
-↓
-State Transition
-↓
-Database
+COM Create Order -> SOM Create Work Order -> Status = SUBMITTED -> Workflow Engine generate Activities -> Activity 1 = RDY / Activity 2 = NRD / Activity 3 = NRD -> State Transition -> Database
 
 ## Learning Objectives
 
