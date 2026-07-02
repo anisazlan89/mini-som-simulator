@@ -36,12 +36,6 @@ public class WorkOrderService {
         return repository.save(workOrder);
     }
 
-    private void generateActivities(WorkOrder workOrder) {
-        workOrder.addActivity(new WorkOrderActivity("Validate Order", ActivityStatus.RDY, null));
-        workOrder.addActivity(new WorkOrderActivity("Provision Service", ActivityStatus.NRD, "Validate Order"));
-        workOrder.addActivity(new WorkOrderActivity("Notify Billing", ActivityStatus.NRD, "Provision Service"));
-    }
-
     public WorkOrderResponse manualCompleteActivity(Long activityId) {
 
         WorkOrderActivity activity = activityRepository.findById(activityId)
@@ -62,15 +56,6 @@ public class WorkOrderService {
         repository.save(workOrder);
 
         return mapToResponse(workOrder);
-    }
-
-    private WorkOrderResponse mapToResponse(WorkOrder workOrder) {
-        return new WorkOrderResponse(
-                workOrder.getId(),
-                workOrder.getServiceNumber(),
-                workOrder.getCustomerName(),
-                workOrder.getProduct(),
-                workOrder.getStatus());
     }
 
     public WorkOrderResponse processCallback(CallbackRequest request) {
@@ -107,6 +92,12 @@ public class WorkOrderService {
         return mapToResponse(savedWorkOrder);
     }
 
+    private void generateActivities(WorkOrder workOrder) {
+        workOrder.addActivity(new WorkOrderActivity("Validate Order", ActivityStatus.RDY, null));
+        workOrder.addActivity(new WorkOrderActivity("Provision Service", ActivityStatus.NRD, "Validate Order"));
+        workOrder.addActivity(new WorkOrderActivity("Notify Billing", ActivityStatus.NRD, "Provision Service"));
+    }
+
     private void releaseNextActivity(WorkOrder workOrder, String completedActivityName) {
 
         workOrder.getActivities()
@@ -114,5 +105,14 @@ public class WorkOrderService {
                 .filter(act -> completedActivityName.equals(act.getPredecessor()))
                 .filter(act -> act.getStatus() == ActivityStatus.NRD)
                 .forEach(act -> act.setStatus(ActivityStatus.RDY));
+    }
+
+    private WorkOrderResponse mapToResponse(WorkOrder workOrder) {
+        return new WorkOrderResponse(
+                workOrder.getId(),
+                workOrder.getServiceNumber(),
+                workOrder.getCustomerName(),
+                workOrder.getProduct(),
+                workOrder.getStatus());
     }
 }
