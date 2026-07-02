@@ -18,8 +18,8 @@ public class ActivityController {
         this.service = service;
     }
 
-    @PutMapping("/{id}/complete")
+    @PutMapping("/{id}/manual-complete")
     public WorkOrderResponse completeActivity(@PathVariable Long id) {
-        return service.completeActivity(id);
+        return service.manualCompleteActivity(id);
     }
 }

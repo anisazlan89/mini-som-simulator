@@ -42,7 +42,7 @@ public class WorkOrderService {
         workOrder.addActivity(new WorkOrderActivity("Notify Billing", ActivityStatus.NRD, "Provision Service"));
     }
 
-    public WorkOrderResponse completeActivity(Long activityId) {
+    public WorkOrderResponse manualCompleteActivity(Long activityId) {
 
         WorkOrderActivity activity = activityRepository.findById(activityId)
                 .orElseThrow();
