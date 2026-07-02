@@ -11,6 +11,13 @@ import com.anis.miniProject.service.WorkOrderService;
 
 import jakarta.validation.Valid;
 
+/*
+ * REST controller for managing Work Orders.
+ *
+ * Provides endpoints to create and manage work orders.
+ * Incoming requests are delegated to the service layer,
+ * where the workflow and business rules are executed.
+ */
 @RestController
 @RequestMapping("/workorders")
 public class WorkOrderController {
@@ -21,6 +28,13 @@ public class WorkOrderController {
         this.service = service;
     }
 
+    /*
+     * Creates a new Work Order.
+     *
+     * The Workflow Engine initializes the work order,
+     * generates the default workflow activities,
+     * and sets the initial status.
+     */
     @PostMapping
     public WorkOrder createWorkOrder(@Valid @RequestBody CreateWorkOrderRequest request) {
         return service.createWorkOrder(request);
