@@ -14,15 +14,7 @@ This project is created for learning enterprise system design, workflow processi
 
 ## Architecture
 
-Client
-↓
-Controller
-↓
-Service
-↓
-Repository
-↓
-Database
+Client -> Controller -> Service -> Repository -> Database
 
 ## Features
 
